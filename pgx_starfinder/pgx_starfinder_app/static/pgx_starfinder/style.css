@@ -1,0 +1,89 @@
+/* ========================================================================================================== */
+/*                                        PGx_starfinder Style Sheet                                                */
+/* ========================================================================================================== */
+
+/* Formats text, background colour, page spacing, display container placement and dynamic page expansion. */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e5f9f1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Formats the display container's look and text alighment within. */
+.container {
+    background: rgb(153, 219, 196);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: min(600px, 90%);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Formats colour and spacing between each <h2> heading in .htmls. */
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-decoration: underline;
+}
+
+/* Formats input field's width/padding/spacing within display container and colour. */
+input {
+    width: 90%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Formats search button width/padding/display within display container. */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Formats button colour when user hovers over button. */
+button:hover {
+    background-color: #014894;
+}
+
+/* Adds 20px od space above results section ('.' targets any class=results elements). */
+.results {
+    margin-top: 20px;
+}
+
+/* Left aligns <dl> elements. */
+.results dl {
+    text-align: left;
+}
+
+/* Adds spacing and padding in <dd> elements (e.g. 'margin: top right bottom left'). */
+.results dd {
+    margin: 4px 0 12px 0;
+    padding-bottom: 12px;
+}
+/* Formats button with url (back to index.html) in results.html. */
+.button-link {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* Formats colour of button with url (back to index.html) in results.html when a user hovers. */
+.button-link:hover {
+    background-color: #014894;
+}
