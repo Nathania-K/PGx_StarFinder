@@ -94,7 +94,7 @@ include = ["pgxstarfinder*"]
 # Do not remove or externalise these resources unless deployment
 # infrastructure explicitly guarantees correct resolution.
 [tool.setuptools.package-data]
-pgxstarfinder = [
+pgxstarfinderapp = [
     "templates/**/*",
     "static/**/*"
 ]
