@@ -9,7 +9,7 @@
 
 # Import name of the package (pgxstarfinder/). The app is installed locally with
 # pip install -e . rather than published to PyPI.
-name = "pgxstarfinder"
+name = "pgx_starfinder"
 
 # Dependencies are read from requirements.txt (see [tool.setuptools.dynamic]
 # below) so the pinned versions live in a single file.
@@ -69,9 +69,8 @@ dependencies = {file = ["requirements.txt"]}
 
 # Search from the repository root, but only package pgxstarfinder and its
 # subpackages, so that tests/ and data/ are not installed as packages.
-where = ["."]
-include = ["pgxstarfinder*"]
-
+where = ["."] 
+include = ["pgx_starfinder*"]
 
 # ==========================================================
 # Package data (non-code assets required at runtime)
@@ -94,7 +93,7 @@ include = ["pgxstarfinder*"]
 # Do not remove or externalise these resources unless deployment
 # infrastructure explicitly guarantees correct resolution.
 [tool.setuptools.package-data]
-"pgxstarfinder.pgxstarfinderapp" = [
+"pgx_starfinder.pgx_starfinder_app" = [
     "templates/**/*",
     "static/**/*"
 ]
@@ -144,7 +143,7 @@ build-backend = "setuptools.build_meta"
 # Execute the complete test suite with coverage:
 #
 #     pytest \
-#         --cov=pgxstarfinder \
+#         --cov=pgx_starfinder \
 #         --cov-report=term-missing:skip-covered \
 #         --cov-report=html \
 #         --cov-report=xml
