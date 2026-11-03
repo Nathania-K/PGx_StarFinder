@@ -1,0 +1,163 @@
+# =========================
+# Project metadata (PEP 621)
+# =========================
+# Layout based on the PyPA sample project and the Python Packaging User
+# Guide, adapted for this application:
+#   https://github.com/pypa/sampleproject
+#   https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+[project]
+
+# Import name of the package (pgxstarfinder/). The app is installed locally with
+# pip install -e . rather than published to PyPI.
+name = "pgxstarfinder"
+
+# Dependencies are read from requirements.txt (see [tool.setuptools.dynamic]
+# below) so the pinned versions live in a single file.
+dynamic = ["dependencies"]
+
+# Updated by hand; the app has no release process yet.
+version = "0.0.1"
+
+description = "Clinical Pharmacogenomics (PGx) tool for star allele resolution"
+
+license = {file = "LICENSE.txt"}
+
+authors = [{name = "Siqi Yin", email = "siqi.yin@nhs.net"},
+    {name = "Becky Alsop", email = "becky.alsop@postgrad.manchester.ac.uk"},
+    {name = "David Fishwick", email = "david.fishwick-2@postgrad.manchester.ac.uk"},
+    {name = "Nathania kulkarni", email = "nathania.kulkarni@rmh.nhs.uk"}]
+
+readme = "README.md"
+
+keywords = [
+    "bioinformatics",
+    "pharmacogenomics",
+    "star allele"
+]
+
+# Matches the interpreter pinned in environment.yml (python 3.12.), which
+# is the only version the app and its pinned dependencies are tested on.
+requires-python = ">=3.12"
+
+# Describe the intended users (clinical scientists and researchers) and
+# the supported Python version, in line with requires-python above.
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Django",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Healthcare Industry",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12"
+]
+
+# =====================================
+# Dynamic configuration (setuptools)
+# =====================================
+[tool.setuptools.dynamic]
+
+# requirements.txt holds exact versions (generated with pip freeze), so a
+# fresh install reproduces the environment the app was tested in. Reading
+# it here avoids keeping a second dependency list in sync by hand.
+dependencies = {file = ["requirements.txt"]}
+
+# =====================================
+# Package discovery
+# =====================================
+[tool.setuptools.packages.find]
+
+# Search from the repository root, but only package pgxstarfinder and its
+# subpackages, so that tests/ and data/ are not installed as packages.
+where = ["."]
+include = ["pgxstarfinder*"]
+
+
+# ==========================================================
+# Package data (non-code assets required at runtime)
+# ==========================================================
+# The application depends on bundled static and template files
+# (HTML and CSS) required for correct operation of the Django UI.
+#
+# These resources must be included in the installed package so that:
+#   - the application behaves identically across environments
+#   - deployment environments (including clinical/training systems)
+#     do not depend on external file paths or local filesystem layout
+#   - reproducibility is maintained across installations
+#
+# In this project, the application is distributed as a controlled,
+# self-contained system for healthcare training and interpretation.
+# Therefore, all runtime dependencies (code + templates + static assets)
+# are packaged together to avoid environment-dependent behaviour.
+#
+# NOTE:
+# Do not remove or externalise these resources unless deployment
+# infrastructure explicitly guarantees correct resolution.
+[tool.setuptools.package-data]
+pgxstarfinder = [
+    "templates/**/*",
+    "static/**/*"
+]
+
+# =====================================
+# Build system configuration
+# =====================================
+[build-system]
+
+# setuptools builds the package and wheel builds .whl files.
+# setuptools_scm is only needed for versions taken from git tags; it is not
+# used while the version above is set by hand.
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2", "wheel"]
+
+# The tool used to build your package
+build-backend = "setuptools.build_meta"
+
+# ==========================================================
+# Development notes
+# ==========================================================
+#
+# Typical development workflow:
+#
+#     conda activate pgxsf_env
+#
+#     pip install -e .
+#
+# The editable installation allows changes to the source code to be
+# reflected immediately without reinstalling the package.
+#
+# If requirements.txt is modified, rerun:
+#
+#     pip install -e .
+#
+# ----------------------------------------------------------
+# Useful development commands
+# ----------------------------------------------------------
+#
+# Run the Django application:
+#
+#     python manage.py runserver
+#
+# Execute the complete unit and UI test suite:
+#
+#     pytest
+#
+# Execute the complete test suite with coverage:
+#
+#     pytest \
+#         --cov=pgxstarfinder \
+#         --cov-report=term-missing:skip-covered \
+#         --cov-report=html \
+#         --cov-report=xml
+#
+# HTML coverage report:
+#
+#     htmlcov/index.html
+#
+# ----------------------------------------------------------
+# Dependencies
+# ----------------------------------------------------------
+#
+# All project dependencies, including testing libraries such as
+# pytest and pytest-cov, are maintained in requirements.txt. This
+# avoids duplication and ensures there is a single source of truth
+# for the project's software environment.
