@@ -20,7 +20,7 @@ if log_dir:
     os.makedirs(log_dir, exist_ok=True)
 
 # Logging configuration
-LOGGING_CONFIG = {
+LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
 
