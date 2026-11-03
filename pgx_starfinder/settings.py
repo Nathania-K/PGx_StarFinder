@@ -1,6 +1,88 @@
+####################################
+### DICTCONFIG SETUP FOR LOGGING ###
+####################################
 """
-Defines requirements of logging configuration
+Defines requirements for Django and logging.
 """
+
+import os 
+from pathlib import Path
+
+#------------------------------------------------------------#
+# Define Base Directory.                                     #
+#------------------------------------------------------------#
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+#-------------------------------------------------------------#
+# Set Secret Key (dev).                                       #
+#-------------------------------------------------------------#
+
+SECRET_KEY = "dev"
+
+#-------------------------------------------------------------#
+# Define Default Log File (devevlopment settings)             #
+#-------------------------------------------------------------#
+
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
+#-------------------------------------------------------------#
+# Register Installed Apps                                     #
+#-------------------------------------------------------------#
+
+INSTALLED_APPS = [
+    "django.contrib.staticfiles",
+    "pgx_starfinder.pgx_starfinder_app",
+]
+
+#-------------------------------------------------------------#
+# Set-up Request Processing                                   #
+#-------------------------------------------------------------#
+
+MIDDLEWARE = [
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+]
+
+#-------------------------------------------------------------#
+# Set-up URL Entry point                                      #
+#-------------------------------------------------------------#
+
+ROOT_URLCONF = "pgx_starfinder.urls"
+
+#-------------------------------------------------------------#
+# Set-up Template Loading/Rendering                           #
+#-------------------------------------------------------------#
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "APP_DIRS": True,
+    }
+]
+
+#-------------------------------------------------------------#
+# Internal Configuration                                      #
+#-------------------------------------------------------------#
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+
+#-------------------------------------------------------------#
+# Static Files                                                #
+#-------------------------------------------------------------#
+
+STATIC_URL = "/static/"
+
+#-------------------------------------------------------------#
+# Application Logging                                         #
+#-------------------------------------------------------------#
 
 import os
 

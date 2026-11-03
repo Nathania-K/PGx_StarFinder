@@ -45,8 +45,13 @@
     
     <h1>Search Results</h1>
 
-    <!-- Results only displayed after search request is performed. 
-    -->
+        <p>Search term: {{ search_term }}</p>
+
+        <pre class="result-output">{{ result_display }}</pre>
+
+        <a href="{% url 'home' %}" class="button-link">
+        New search
+        </a>    
 
 </div> 
 

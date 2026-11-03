@@ -72,7 +72,7 @@ button:hover {
     margin: 4px 0 12px 0;
     padding-bottom: 12px;
 }
-/* Formats button with url (back to index.html) in results.html. */
+/* Style the “New search” link as a button. */
 .button-link {
     display: inline-block;
     background-color: #007bff;
@@ -86,4 +86,13 @@ button:hover {
 /* Formats colour of button with url (back to index.html) in results.html when a user hovers. */
 .button-link:hover {
     background-color: #014894;
+}
+
+/* Formats the output of results in results.html to wrap text and break words as needed. */
+.result-output {
+    max-width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    text-align: left;
 }

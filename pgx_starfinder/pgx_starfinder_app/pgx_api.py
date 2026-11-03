@@ -4,7 +4,7 @@ import logging
 import requests
 from dotenv import load_dotenv
 import pandas as pd
-from pgx_starfinder.pgx_starfinder_app.errors import handle_http_error
+#from pgx_starfinder.pgx_starfinder_app.errors import handle_http_error
 
 # This file connects to external pharmacogenomics databases.
 # The goal is to check gene/allele information and return a clean, simple result.
@@ -20,6 +20,28 @@ pm_key = os.environ.get("PHARMVAR_API_KEY")
 # CPIC base URL.
 cpic_url = "https://api.cpicpgx.org/v1/"
 
+def handle_http_error(error, api_name="API", context="consult"):
+    """
+    Takes an HTTPError object and returns a standardised result dictionary.
+    """
+    response = getattr(error, "response", None)
+    status_code = response.status_code if response is not None else None
+
+    # A few common HTTP problems need a friendlier explanation.
+    
+    if status_code in (401, 403):
+        reason = f"{api_name} API unauthorised, contact IT."
+        logger.error("%s returned %s during %s: API key missing or invalid",
+                     api_name, status_code, context)
+    elif status_code == 404:
+        reason = f"Endpoint or item not found in {api_name}, check input."
+        logger.warning("%s returned 404 during %s: %s", api_name, context, error)
+    else:
+        reason = f"HTTP Error {status_code} during {context}: {error}, please try again."
+        logger.error("%s returned HTTP %s during %s: %s",
+                     api_name, status_code, context, error)
+
+    return {"Valid": False, "Reason": reason}
 
 def pharmvar_api(star_allele):
     """

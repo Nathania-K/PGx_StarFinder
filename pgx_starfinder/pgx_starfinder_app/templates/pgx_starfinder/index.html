@@ -55,12 +55,12 @@
 
     {% csrf_token %}
 
-    <label for="gene">Please enter a star allele:</label>
+    <label for="star_allele">Please enter a star allele:</label>
 
     <input 
         type="text" 
-        id="gene" 
-        name="gene"
+        id="star_allele" 
+        name="star_allele"
         value="{{ search_term|default:'' }}"
         required
         >

@@ -1,0 +1,21 @@
+"""
+Urls to determine which display view to handle requests.
+Checks URL patterns in order (first matching used).
+"""
+
+from django.urls import path
+from pgx_starfinder.pgx_starfinder_app import views
+
+urlpatterns = [
+
+    #Homepage: 
+    #Url: '/' as Django does not use leading '/'
+    # Displays the search form. 
+    path("", views.home, name="home"),
+
+    #Star allele search endpoint: 
+    #Url: '/search/'
+    #Processes POST requests from the home form. 
+    path("search/", views.search, name="search"),
+
+]
