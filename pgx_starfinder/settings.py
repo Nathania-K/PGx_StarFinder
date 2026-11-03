@@ -7,7 +7,7 @@ from pathlib import Path
 
 # Define the default log file (hidden file within home directory)
 home_dir = os.path.expanduser("~")
-DEFAULT_LOG = os.path.join(home_dir, ".HGNC_search.log")
+DEFAULT_LOG = os.path.join(home_dir, ".PGx_StarFinder.log")
 
 LOG_FILE = DEFAULT_LOG
 
