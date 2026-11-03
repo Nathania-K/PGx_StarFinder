@@ -3,7 +3,6 @@ Defines requirements of logging configuration
 """
 
 import os
-from pathlib import Path
 
 # Define the default log file (hidden file within home directory)
 home_dir = os.path.expanduser("~")
@@ -66,10 +65,6 @@ LOGGING = {
             # maxBytes:
             # Maximum size of the log file BEFORE rotation happens.
             #
-            # Example:
-            # 1_048_576 bytes = 1 MB
-            #
-            # Here we set a small size for demonstration.
             #
             "maxBytes": 1024 * 100,
             "backupCount": 3,
