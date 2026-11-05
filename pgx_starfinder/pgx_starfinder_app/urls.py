@@ -8,14 +8,19 @@ from pgx_starfinder.pgx_starfinder_app import views
 
 urlpatterns = [
 
-    #Homepage: 
-    #Url: '/' as Django does not use leading '/'
+    # Homepage: 
+    # url: '/' as Django does not use leading '/'
     # Displays the search form. 
     path("", views.home, name="home"),
 
-    #Star allele search endpoint: 
-    #Url: '/search/'
-    #Processes POST requests from the home form. 
+    # Star allele search endpoint: 
+    # url: '/search/'
+    # Processes POST requests from the home form. 
     path("search/", views.search, name="search"),
+
+    # Link page:
+    # url: '/links/'
+    # Displays the links page which may be useful to CS.
+    path("links/", views.links, name="links"),
 
 ]

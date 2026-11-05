@@ -6,8 +6,8 @@ import logging
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.core.cache import cache
-from .pgx_api import data_unification
 
+from .pgx_api import data_unification
 from pprint import pformat
 
 # Sets up logging for view module.
@@ -17,6 +17,7 @@ logger.info("Initialising Django view layer")
 
 HOME_TEMPLATE = "pgx_starfinder/index.html"
 RESULTS_TEMPLATE = "pgx_starfinder/results.html"
+LINKS_TEMPLATE = "pgx_starfinder/links.html"
 
 # Defines and render application homepage.
 def home(request: HttpRequest) -> HttpResponse:
@@ -71,7 +72,7 @@ def search(request: HttpRequest) -> HttpResponse:
     logger.info("searching for star allele: %s", search_term)
 
     #Add cache function, can resume even if the website restarts
-    CACHE_VERSION = "v1"            #change this when data_unification's output changes
+    CACHE_VERSION = "v2"            #change this when data_unification's output changes
     CACHE_SECONDS = 60 * 60 * 24 * 7   #keep results for one week
 
     # Same key for "cyp2c19*2", " CYP2C19*2 " and so on.
@@ -122,3 +123,18 @@ def search(request: HttpRequest) -> HttpResponse:
             "result_display":result_display,
         },
     )
+
+def links(request: HttpRequest) -> HttpResponse:
+    """
+    Renders the links page containing useful links.
+
+    Args:
+        request (HttpRequest): Incoming HTTP request for Useful Links page.
+
+    Returns:
+        HttpResponse: Rendered Useful Links page.
+    """
+    
+    logger.debug("Rendering useful links page.")    
+    
+    return render(request, LINKS_TEMPLATE)
