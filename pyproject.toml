@@ -99,6 +99,15 @@ include = ["pgx_starfinder*"]
 ]
 
 # =====================================
+# Pytest configuration
+# =====================================
+[tool.pytest.ini_options]
+# Tells pytest-django which Django settings to load, the same module that
+# manage.py uses.
+DJANGO_SETTINGS_MODULE = "pgx_starfinder.settings"
+testpaths = ["tests"]
+
+# =====================================
 # Build system configuration
 # =====================================
 [build-system]
