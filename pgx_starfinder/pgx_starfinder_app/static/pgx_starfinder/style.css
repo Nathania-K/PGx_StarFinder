@@ -96,3 +96,34 @@ button:hover {
     word-break: break-word;
     text-align: left;
 }
+
+/* Widens the results page container and left aligns its content. */
+.container-wide {
+    width: 98%;
+    margin: 30px 0;
+    text-align: left;
+}
+
+/* Highlights notes about sources that returned no data. */
+.missing-notes {
+    background: #fff4e5;
+    border-left: 4px solid #f0a020;
+    padding: 4px 12px;
+    margin-bottom: 16px;
+}
+
+
+/* Plain bordered tables on the results page. */
+.results table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+
+.results th,
+.results td {
+    border: 1px solid #333;
+    padding: 6px;
+    text-align: left;
+    vertical-align: top;
+}

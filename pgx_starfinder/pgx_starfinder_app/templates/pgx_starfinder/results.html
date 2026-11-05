@@ -38,20 +38,132 @@
 
 <body>
 
-<div class="container">
+<div class="container container-wide">
     <!-- ========================================================================== -->
     <!-- Page Heading                                                               -->
     <!-- ========================================================================== -->
-    
+
     <h1>Search Results</h1>
 
-        <p>Search term: {{ search_term }}</p>
+    <h1>Search term: {{ search_term }}</h1>
 
-        <pre class="result-output">{{ result_display }}</pre>
+    <!-- Results only displayed after search request is performed. 
+    -->
 
-        <a href="{% url 'home' %}" class="button-link">
-        New search
-        </a>    
+    <a
+    class="button-link" 
+    href="{% url 'home' %}">
+    🔙 Search for another star allele
+    </a>
+
+    {% if result.PharmVar_Missing_Reason or result.CPIC_Missing_Reason or result.ClinPGx_Missing_Reason %}
+        <section class="results missing-notes">
+            {% if result.PharmVar_Missing_Reason %}<p><strong>PharmVar:</strong> {{ result.PharmVar_Missing_Reason }}</p>{% endif %}
+            {% if result.CPIC_Missing_Reason %}<p><strong>CPIC:</strong> {{ result.CPIC_Missing_Reason }}</p>{% endif %}
+            {% if result.ClinPGx_Missing_Reason %}<p><strong>ClinPGx:</strong> {{ result.ClinPGx_Missing_Reason }}</p>{% endif %}
+        </section>
+    {% endif %}
+
+    {% if result.Valid %}
+    {% with allele=result.Allele_Data %}
+        <section class="results">
+            <h2>Allele Information:</h2>
+
+            <h3>Basic Allele Information</h3>
+            <table>
+                <tr><th>Allele</th><td>{{ allele.Allele|default:"None recorded" }}</td></tr>
+                <tr><th>Allele Type</th><td>{{ allele.Type|default:"None recorded" }}</td></tr>
+                <tr><th>Haplotype HGVS</th><td>{{ allele.Haplotype_HGVS|default:"None recorded" }}</td></tr>
+                <tr><th>HGNC ID</th><td>{{ allele.HGNC_ID|default:"None recorded" }}</td></tr>
+            </table>
+
+            <h3>Variant Information</h3>
+            {% if allele.Variants %}
+            <table>
+                <tr>
+                    <th>Variant HGVS</th>
+                    <th>rsID</th>
+                    <th>Impact</th>
+                    <th>gnomAD Frequency</th>
+                    <th>MANE Select Transcript</th>
+                </tr>
+                {% for variant in allele.Variants %}
+                <tr>
+                    <td>{{ variant.Variant_HGVS|default:"None recorded" }}</td>
+                    <td>{{ variant.rsID|default:"None recorded" }}</td>
+                    <td>{{ variant.Impact|default:"None recorded" }}</td>
+                    <td>{{ variant.GnomAD_Frequency|default:"None recorded" }}</td>
+                    <td>{{ variant.MANE_Select|default:"None recorded" }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>None recorded</p>
+            {% endif %}
+
+            <h3>Academic Findings (CPIC)</h3>
+            <table>
+                <tr><th>Academic Findings</th><td>{{ allele.Academic_Findings|default:"None recorded" }}</td></tr>
+                <tr>
+                    <th>Citation Link(s)</th>
+                    <td>
+                        {% for link in allele.Citation_Link %}
+                            <a href="{{ link }}" target="_blank" rel="noopener">{{ link }}</a><br>
+                        {% empty %}
+                            None recorded
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="results">
+            <h2>Drug Information:</h2>
+
+            {% for drug in result.Drug_Data %}
+            <h3>{{ drug.Drug|default:"Unnamed drug" }}</h3>
+
+            <table>
+                <tr>
+                    <th>Related Disease(s)</th>
+                    <th>Level of Evidence</th>
+                    <th>Allele Effect</th>
+                    <th>Type of Evidence</th>
+                </tr>
+                {% for annotation in drug.Annotations %}
+                <tr>
+                    <td>{{ annotation.Related_Disease|default:"None recorded" }}</td>
+                    <td>{{ annotation.Level|default:"None recorded" }}</td>
+                    <td>{{ annotation.Allele_Effect|default:"None recorded" }}</td>
+                    <td>{{ annotation.Type_of_Evidence|default:"None recorded" }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            {% if drug.Guideline_Details %}
+            <table>
+                <tr>
+                    <th>Guideline Title</th>
+                    <th>Guideline Source</th>
+                    <th>Guideline Summary</th>
+                    <th>Guideline Citation Link(s)</th>
+                </tr>
+                {% for guideline in drug.Guideline_Details %}
+                <tr>
+                    <td>{{ guideline.Title|default:"None recorded" }}</td>
+                    <td>{{ guideline.Source|default:"None recorded" }}</td>
+                    <td>{{ guideline.Summary|default:"None recorded" }}</td>
+                    <td>{{ guideline.Citation_Link|default:"None recorded" }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+            {% empty %}
+            <p>None recorded</p>
+            {% endfor %}
+        </section>
+    {% endwith %}
+    {% endif %}
 
 </div> 
 

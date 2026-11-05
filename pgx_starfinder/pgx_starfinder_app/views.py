@@ -5,7 +5,7 @@ import logging
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-
+from django.core.cache import cache
 from .pgx_api import data_unification
 
 from pprint import pformat
@@ -70,8 +70,40 @@ def search(request: HttpRequest) -> HttpResponse:
 
     logger.info("searching for star allele: %s", search_term)
 
-    # Combines the PharmVar and CPIC results for the submitted allele.
-    result = data_unification(search_term)
+    #Add cache function, can resume even if the website restarts
+    CACHE_VERSION = "v1"            #change this when data_unification's output changes
+    CACHE_SECONDS = 60 * 60 * 24 * 7   #keep results for one week
+
+    # Same key for "cyp2c19*2", " CYP2C19*2 " and so on.
+    cache_key = f"pgx:{CACHE_VERSION}:{search_term.strip().upper()}"
+
+    result = cache.get(cache_key)
+
+    if result is None:
+        # Combines the PharmVar, CPIC and ClinPGx results for the submitted allele.
+        result = data_unification(search_term)
+
+        # Permanent "not found" reasons (e.g. "check input", "Not a star allele") are
+        # fine to remember, but temporary failures (network, HTTP, parsing, auth) are
+        # not, so the next search tries the APIs again.
+        temp_marker = ("try again", "contact it", "failed")
+        has_temporary_failure = False
+
+        if result:
+            for key in ("PharmVar_Missing_Reason", "CPIC_Missing_Reason", "ClinPGx_Missing_Reason"):
+                reason = result.get(key) or ""
+                reason = reason.lower()
+
+                for marker in temp_marker:
+                    if marker in reason:
+                        has_temporary_failure = True
+                        break
+
+                if has_temporary_failure:
+                    break
+
+        if result and not has_temporary_failure:
+            cache.set(cache_key, result, timeout=CACHE_SECONDS)
 
     # Formats the nested dictionary over multiple lines for a more readable HTML display.
     result_display = pformat(
@@ -86,6 +118,7 @@ def search(request: HttpRequest) -> HttpResponse:
         RESULTS_TEMPLATE,
         {
             "search_term": search_term,
+            "result": result,
             "result_display":result_display,
         },
     )

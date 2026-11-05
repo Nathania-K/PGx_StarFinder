@@ -169,3 +169,14 @@ LOGGING = {
         "handlers": ["console", "file"],
     }
 }
+
+#-------------------------------------------------------------#
+# Cache creation                                              #
+#-------------------------------------------------------------#
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": BASE_DIR / ".cache",
+    }
+}
