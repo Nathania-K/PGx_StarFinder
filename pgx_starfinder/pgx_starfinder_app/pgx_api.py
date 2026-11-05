@@ -683,15 +683,15 @@ def data_unification(star_allele):
         "Valid": True,
         "Allele_Data": {
             "Allele": allele_name,
-            "Type": pharmvar_data.get("Type"),
-            "Haplotype_HGVS": pharmvar_data.get("Haplotype_HGVS"),
-            "HGNC_ID": pharmvar_data.get("HGNC_ID"),
+            "Type": pharmvar_data.get("Type") or pharmvar_data.get("Reason"),
+            "Haplotype_HGVS": pharmvar_data.get("Haplotype_HGVS") or pharmvar_data.get("Reason"),
+            "HGNC_ID": pharmvar_data.get("HGNC_ID") or pharmvar_data.get("Reason"),
             "Variants": pharmvar_data.get("Variants") or [],
-            "Academic_Findings": cpic_data.get("Academic_Findings"),
+            "Academic_Findings": cpic_data.get("Academic_Findings") or cpic_data.get("Reason"),
             "Citation_Link": cpic_data.get("Citation_Link") or [],
         },
         # Drug information from ClinPGx: one entry per drug, with its annotations and guidelines.
-        "Drug_Data": clinpgx_data.get("Drugs") or [],
+        "Drug_Data": clinpgx_data.get("Drugs") or clinpgx_data.get("Reason"),
         **reasons,
     }
     return unified_result
