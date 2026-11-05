@@ -1,0 +1,28 @@
+# mkdocs.yml: settings for the documentation website.
+#
+# MkDocs reads ONLY the folder named in `docs_dir`. Pages elsewhere
+# (such as README.md) are not part of the site, so docs pages are separate
+# copies of README sections. When one changes, update the other.
+site_name: PGxStarFinder
+site_description: Web app for searching pharmacogenomic (PGx) information by star allele
+site_url: https://Nathania-K.github.io/PGx_StarFinder/
+repo_name: Nathania-K/PGx_StarFinder
+repo_url: https://github.com/Nathania-K/PGx_StarFinder
+
+# The folder of Markdown pages.
+docs_dir: docs
+
+# The menu on the left of the website. Each line is: Menu title: page file in docs/
+# For example, "- Installation: installation.md" shows "Installation" in the menu
+# and opens the page docs/installation.md. The menu follows the order of the lines.
+# Every file listed here must exist in docs/, or the build warns (and fails with --strict).
+# A page in docs/ that is not listed here still builds, but has no menu link.
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - User guide: user-guide.md
+  - Technical guide: technical.md
+  - Docker: docker.md
+  - Testing: testing.md
+  - Logging: logging.md
+  - Credentials: credentials.md
