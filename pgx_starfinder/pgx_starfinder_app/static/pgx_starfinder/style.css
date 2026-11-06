@@ -158,7 +158,6 @@ button:hover {
     padding-bottom: 12px;
 }
 
-
 /* Formats colour of button with url (back to index.html) in results.html when a user hovers. */
 .button-link:hover {
     background-color: #014894;
@@ -179,6 +178,12 @@ button:hover {
     border-left: 4px solid #f0a020;
     padding: 4px 12px;
     margin-bottom: 16px;
+}
+
+/* Centres the heading and navigation button on the results page. */
+.results-header {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 /* Plain bordered tables on the results page. */

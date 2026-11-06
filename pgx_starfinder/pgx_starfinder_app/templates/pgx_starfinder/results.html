@@ -6,18 +6,15 @@
 
 {% block content %}
 
-    <h1>Search Results</h1>
+    <div class="results-header">
+        <h1>Search Results</h1>
 
-    <h2>Search term: {{ search_term }}</h2>
+        <h2>Search term: {{ search_term }}</h2>
 
-    <!-- Results only displayed after search request is performed. 
-    -->
-
-    <a
-    class="button-link" 
-    href="{% url 'home' %}">
-    🔙 Search for another star allele
-    </a>
+        <a class="button-link" href="{% url 'home' %}">
+            🔙 Search for another star allele
+        </a>
+    </div>
 
     <!-- ========================================================================== -->
     <!-- Warning display if information missing from PharmVar/CPIC/ClinPGx          -->
