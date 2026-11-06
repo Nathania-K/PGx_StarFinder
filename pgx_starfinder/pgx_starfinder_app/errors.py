@@ -2,7 +2,7 @@
 Shared error handling for the external API modules.
 
 The module:
-1. Converts HTTP errors into a standard result dictionary.
+Converts HTTP errors into a standard result dictionary.
 
 Used by pgx_api.py and vv_api.py so every
 failed call returns the same Valid/Reason structure.

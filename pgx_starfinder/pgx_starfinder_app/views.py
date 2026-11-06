@@ -6,7 +6,7 @@ import logging
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.core.cache import cache
-from .pgx_api import data_unification
+from pgx_starfinder.pgx_starfinder_app.pgx_api import data_unification
 
 from pprint import pformat
 
