@@ -1,5 +1,5 @@
 /* ========================================================================================================== */
-/*                                        PGx_starfinder Style Sheet                                                */
+/*                                        PGx_starfinder Style Sheet                                          */
 /* ========================================================================================================== */
 
 /* Formats text, background colour, page spacing, display container placement and dynamic page expansion. */
@@ -9,21 +9,86 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
 }
 
-/* Formats the display container's look and text alighment within. */
+/*---------------------------------------------------*/
+/* Styles the navigation bar at the top of the page. */
+/*---------------------------------------------------*/
+/* Codex assisted. */
+
+.navbar {
+    width: 100%;
+    background-color: #00695c;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-container {
+    width: min(1200px, 92%); 
+    margin: 0 auto;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-link {
+    display: block;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+    background-color: #004d40;
+}
+
+
+/*---------------------------------------------------*/
+/* Formats the container display and text within.    */
+/*---------------------------------------------------*/
+
 .container {
     background: rgb(153, 219, 196);
     padding: 30px;
+    margin: 30px auto;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: min(600px, 90%);
     box-sizing: border-box;
     text-align: center;
 }
+
+/* Widens the results page container and left aligns its content. */
+.container-wide {
+    width: 98%;
+    margin: 30px 0;
+    text-align: left;
+}
+
 
 /* Formats colour and spacing between each <h2> heading in .htmls. */
 h2 {
@@ -41,7 +106,10 @@ input {
     border-radius: 5px;
 }
 
-/* Formats search button width/padding/display within display container. */
+
+/*---------------------------------------------------*/
+/*              Formats the buttons                  */
+/*---------------------------------------------------*/
 button {
     background-color: #007bff;
     color: white;
@@ -56,6 +124,23 @@ button {
 button:hover {
     background-color: #014894;
 }
+
+/* Style the “New search” link as a button. */
+.button-link {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+/*---------------------------------------------------*/
+/* Formats the display of the results                */
+/*---------------------------------------------------*/
+/* Codex assisted.
 
 /* Adds 20px od space above results section ('.' targets any class=results elements). */
 .results {
@@ -72,18 +157,119 @@ button:hover {
     margin: 4px 0 12px 0;
     padding-bottom: 12px;
 }
-/* Formats button with url (back to index.html) in results.html. */
-.button-link {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 5px;
-    text-decoration: none;
-    text-align: center;
-}
 
 /* Formats colour of button with url (back to index.html) in results.html when a user hovers. */
 .button-link:hover {
     background-color: #014894;
 }
+
+/* Formats the output of results in results.html to wrap text and break words as needed. */
+.result-output {
+    max-width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    text-align: left;
+}
+
+/* Highlights notes about sources that returned no data. */
+.missing-notes {
+    background: #fff4e5;
+    border-left: 4px solid #f0a020;
+    padding: 4px 12px;
+    margin-bottom: 16px;
+}
+
+/* Centres the heading and navigation button on the results page. */
+.results-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Plain bordered tables on the results page. */
+.results table {
+    width: 100%;
+    background-color: #e5f9f1;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+
+.results th,
+.results td {
+    border: 1px solid #333;
+    padding: 6px;
+    text-align: left;
+    vertical-align: top;
+}
+
+/*---------------------------------------------------*/
+/* Formats the display the links.html                */
+/*---------------------------------------------------*/
+
+/* Justifies text in table cells for better readability. */
+.useful-links {
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+}
+
+.useful-links li {
+    margin-bottom: 16px;
+    padding: 16px;
+    background-color: #e5f9f1;
+    border-radius: 6px;
+}
+
+.useful-links a {
+    color: #0056b3;
+    font-weight: bold;
+}
+
+.useful-links p {
+    margin: 6px 0 0;
+}
+
+
+/*---------------------------------------------------*/
+/* Formats the display of the guideline tables       */
+/*---------------------------------------------------*/
+/* Codex assisted.
+
+/* Uses the specified widths for the guideline table columns. */
+.guideline-table {
+    table-layout: fixed;
+}
+
+/* Column widths should add up to 100%. */
+.guideline-title-column {
+    width: 20%;
+}
+
+.guideline-source-column {
+    width: 15%;
+}
+
+.guideline-summary-column {
+    width: 50%;
+}
+
+.guideline-citation-column {
+    width: 15%;
+}
+
+/* Prevents long citation URLs from widening the column. */
+.guideline-table td {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.guideline-citations a {
+    display: block;
+    overflow-wrap: anywhere;
+}
+
+.guideline-citations a + a {
+    margin-top: 8px;
+}
+

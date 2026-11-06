@@ -1,55 +1,168 @@
-<!-- ========================================================================== -->
-<!-- Search Results                                                             -->
-<!-- ========================================================================== -->    
+{% extends "pgx_starfinder/base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}Results for {{ search_term }} | PGx StarFinder{% endblock %}
 
-<head>
+{% block container_class %} container-wide{% endblock %}
 
-<!-- ========================================================================== -->
-<!-- Set-up MetaData & Provide Page Heading                                     -->
-<!-- ========================================================================== -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
 
-    <title>PGx_StarFinder</title>
+    <div class="results-header">
+        <h1>Search Results</h1>
 
-<!-- ========================================================================== -->
-<!-- Format External Resources                                                  -->
-<!-- ========================================================================== -->
-    <link 
-        rel="stylesheet" 
-        href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300"
-        type="text/css" 
-        >
+        <h2>Search term: {{ search_term }}</h2>
 
-<!-- ========================================================================== -->
-<!-- Link Static Assests                                                        -->
-<!-- ========================================================================== -->
-    {% load static %}
+        <a class="button-link" href="{% url 'home' %}">
+            🔙 Search for another star allele
+        </a>
+    </div>
 
-    <link 
-        rel="stylesheet" 
-        href="{% static 'pgx_starfinder/style.css' %}"
-        >
-
-</head>
-
-<body>
-
-<div class="container">
     <!-- ========================================================================== -->
-    <!-- Page Heading                                                               -->
+    <!-- Warning display if information missing from PharmVar/CPIC/ClinPGx          -->
     <!-- ========================================================================== -->
-    
-    <h1>Search Results</h1>
 
-    <!-- Results only displayed after search request is performed. 
-    -->
+    {% if result.PharmVar_Missing_Reason or result.CPIC_Missing_Reason or result.ClinPGx_Missing_Reason %}
+        <section class="results missing-notes">
+            {% if result.PharmVar_Missing_Reason %}<p><strong>PharmVar:</strong> {{ result.PharmVar_Missing_Reason }}</p>{% endif %}
+            {% if result.CPIC_Missing_Reason %}<p><strong>CPIC:</strong> {{ result.CPIC_Missing_Reason }}</p>{% endif %}
+            {% if result.ClinPGx_Missing_Reason %}<p><strong>ClinPGx:</strong> {{ result.ClinPGx_Missing_Reason }}</p>{% endif %}
+        </section>
+    {% endif %}
 
-</div> 
+    <!-- ========================================================================== -->
+    <!-- Display of information from PharmVar/CPIC/ClinPGx                          -->
+    <!-- ========================================================================== -->
+    {% if result.Valid %}
+    {% with allele=result.Allele_Data %}
+        <section class="results">
+            <h2>Allele Information:</h2>
 
-</body>
+            <h3>Basic Allele Information</h3>
+            <table>
+                <tr><th>Allele</th><td>{{ allele.Allele|default:"None recorded" }}</td></tr>
+                <tr><th>Allele Type</th><td>{{ allele.Type|default:result.PharmVar_Missing_Reason }}</td></tr>
+                <tr><th>PharmVar ID</th><td>{{ allele.PharmVar_ID|default:result.PharmVar_Missing_Reason }}</td></tr>
+                <tr><th>Allele Description</th><td>{{ allele.Allele_Description|default:result.PharmVar_Missing_Reason }}</td></tr>
+                <tr><th>HGNC ID</th><td>{{ allele.HGNC_ID|default:result.PharmVar_Missing_Reason }}</td></tr>
+            </table>
 
-</html>
+            <h3>Variant Information</h3>
+            {% if allele.Variants %}
+            <table>
+                <tr>
+                    <th>Variant HGVS</th>
+                    <th>rsID</th>
+                    <th>Protein Consequence</th>
+                    <th>gnomAD Frequency</th>
+                    <th>MANE Select Transcript</th>
+                </tr>
+                {% for variant in allele.Variants %}
+                <tr>
+                    <td>{{ variant.Variant_HGVS|default:result.PharmVar_Missing_Reason }}</td>
+                    <td>{{ variant.rsID|default:result.PharmVar_Missing_Reason }}</td>
+                    <td>{{ variant.Protein_Consequences|default:result.PharmVar_Missing_Reason }}</td>
+                    <td>{{ variant.GnomAD_Frequency|default:result.PharmVar_Missing_Reason }}</td>
+                    <td>{{ variant.MANE_Select_Transcript|default:result.PharmVar_Missing_Reason }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>None recorded</p>
+            {% endif %}
+
+            <h3>Academic Findings (CPIC)</h3>
+            <table>
+                <tr><th>Academic Findings</th><td>{{ allele.Academic_Findings|default:result.CPIC_Missing_Reason }}</td></tr>
+                <tr>
+                    <th>Citation Link(s)</th>
+                    <td>
+                        {% for link in allele.Citation_Link %}
+                            <a href="{{ link }}" target="_blank" rel="noopener">{{ link }}</a><br>
+                        {% empty %}
+                            None recorded
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- ========================================================================== -->
+        <!-- Display of information for Drug Information                                -->
+        <!-- ========================================================================== -->
+        <section class="results">
+            <h2>Drug Information:</h2>
+
+            {% if result.ClinPGx_Missing_Reason %}
+            <p>{{ result.Drug_Data }}</p>
+            {% else %}
+            {% for drug in result.Drug_Data %}
+            <h3>{{ drug.Drug|default:"Unnamed drug" }}</h3>
+
+            <table>
+                <tr>
+                    <th>Related Disease(s)</th>
+                    <th>Level of Evidence</th>
+                    <th>Allele Effect</th>
+                    <th>Type of Evidence</th>
+                </tr>
+                {% for annotation in drug.Annotations %}
+                <tr>
+                    <td>{{ annotation.Related_Disease|default:"None recorded" }}</td>
+                    <td>{{ annotation.Level|default:"None recorded" }}</td>
+                    <td>{{ annotation.Allele_Effect|default:"None recorded" }}</td>
+                    <td>{{ annotation.Type_of_Evidence|default:"None recorded" }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <!-- ========================================================================== -->
+            <!-- Display of information for Drug Guideline(s)                               -->
+            <!-- ========================================================================== -->
+            {% if drug.Guideline_Details %}
+            <table class="guideline-table">
+                <colgroup>
+                    <col class="guideline-title-column">
+                    <col class="guideline-source-column">
+                    <col class="guideline-summary-column">
+                    <col class="guideline-citation-column">
+                </colgroup>
+
+                <tr>
+                    <th>Guideline Title</th>
+                    <th>Guideline Source</th>
+                    <th>Guideline Summary</th>
+                    <th>Guideline Citation Link(s)</th>
+                </tr>
+
+                {% for guideline in drug.Guideline_Details %}
+                <tr>
+                    <td>{{ guideline.Title|default:"None recorded" }}</td>
+                    <td>{{ guideline.Source|default:"None recorded" }}</td>
+                    <td>{{ guideline.Summary|default:"None recorded" }}</td>
+                    <td class="guideline-citations">
+                        {% for link in guideline.Citation_Link %}
+                            <a href="{{ link }}"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            {{ link }}
+                            </a>
+
+                        {% empty %}
+                            None recorded
+                        {% endfor %}
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </table>
+
+            {% endif %}
+            {% empty %}
+            <p>None recorded</p>
+            {% endfor %}
+            {% endif %}
+            
+        </section>
+    {% endwith %}
+    {% endif %}
+
+{% endblock %}

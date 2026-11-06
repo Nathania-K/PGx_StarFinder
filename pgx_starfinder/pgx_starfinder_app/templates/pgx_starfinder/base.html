@@ -1,0 +1,60 @@
+<!-- ========================================================================== -->
+<!-- Sets up base .html to be resused by .htmls in PGx_StarFinder               -->
+<!-- ========================================================================== -->  
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- ========================================================================== -->
+<!-- Set-up MetaData & Provide Page Heading                                     -->
+<!-- ========================================================================== -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}PGx_StarFinder{% endblock %}</title>
+
+<!-- ========================================================================== -->
+<!-- Format External Resources                                                  -->
+<!-- ========================================================================== -->
+    <link
+        rel="stylesheet"
+        href="{% static 'pgx_starfinder/style.css' %}"
+    >
+
+    {% block extra_head %}{% endblock %}
+</head>
+<!-- ========================================================================== -->
+<!-- Incorporate a navigation bar into the app                                  -->
+<!-- ========================================================================== -->
+<body>
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="navbar-container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                PGx StarFinder
+            </a>
+
+            <ul class="navbar-nav">
+                <li>
+                    <a class="nav-link" href="{% url 'home' %}">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a class="nav-link" href="{% url 'links' %}">
+                        Useful Links
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container{% block container_class %}{% endblock %}">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>
