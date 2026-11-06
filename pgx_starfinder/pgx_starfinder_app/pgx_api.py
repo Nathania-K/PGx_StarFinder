@@ -206,7 +206,7 @@ def cpic_api(star_allele):
         return result
     try:
         if not allele_info:
-            result["Reason"] = f"No CPIC records found for star allele: {star_allele}, check input"
+            result["Reason"] = f"No CPIC records found for star allele: {star_allele}, check input, please note that CPIC does not record suballele info"
             logger.warning("No CPIC allele record for %s", star_allele)
             return result
 
@@ -285,7 +285,7 @@ def clinpgx_api(star_allele):
                     })
 
         if not drugs:
-            return {"Valid": False, "Reason": f"No ClinPGx annotations found for {star_allele}, check input"}
+            return {"Valid": False, "Reason": f"No ClinPGx annotations found for {star_allele}, check input, please note that ClinPGx does not record suballele info"}
 
         #Merge entries with the same drug name: one entry per drug, its annotations inside.
         merged = {}
