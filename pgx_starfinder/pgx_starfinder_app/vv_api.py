@@ -20,8 +20,6 @@ vv_email = os.environ.get("SHAIP_EMAIL")
 vv_password = os.environ.get("SHAIP_PASSWORD")
 vv_variant_endpoint = "variantvalidator"
 
-print(vv_email,len(vv_password))
-
 def get_initial_tokens(vv_email, vv_password):
     """Gets the login tokens needed to talk to VariantValidator."""
     # Think of this as logging in. We need a session token so the API knows
