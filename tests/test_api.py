@@ -14,18 +14,24 @@ MOCK_DIR = Path(__file__).parent / "mock_data"
 API_pgx = "pgx_starfinder.pgx_starfinder_app.pgx_api"
 API_vv = "pgx_starfinder.pgx_starfinder_app.vv_api"
 
+
+def load_json(path):
+    """Read a mock JSON file as UTF-8 so tests behave the same on every OS."""
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
 MOCKS = {
-    "cpic_allele": json.loads((MOCK_DIR / "cyp2c19_2_cpic.json").read_text()),
-    "pharmvar_allele": json.loads((MOCK_DIR / "cyp2c19_2_pharmvar.json").read_text()),
-    "clinpgx_gene": json.loads((MOCK_DIR / "clinpgx_annotation" / "clinpgx_summary.json").read_text()),
-    "clinpgx_guideline": json.loads((MOCK_DIR / "clinpgx_annotation" / "clinpgx_guideline_example.json").read_text()),
-    "vv_correct_38": json.loads((MOCK_DIR / "vv_variable" / "vv_variant_grch38.json").read_text()),
-    "vv_correct_37": json.loads((MOCK_DIR / "vv_variable" / "vv_variant_grch37.json").read_text()),
-    "vv_incorrect": json.loads((MOCK_DIR / "vv_variable" / "vv_variant_grch37_wrong.json").read_text()),
-    "vv_NG": json.loads((MOCK_DIR / "vv_variable" / "vv_NG.json").read_text()),
-    "vv_NG_outdated": json.loads((MOCK_DIR / "vv_variable" / "vv_NG_outdated.json").read_text()),
-    "vv_LRG": json.loads((MOCK_DIR / "vv_variable" / "vv_LRG.json").read_text()),
-    "vv_LRG_outdated": json.loads((MOCK_DIR / "vv_variable" / "vv_LRG_outdated.json").read_text()),
+    "cpic_allele": load_json(MOCK_DIR / "cyp2c19_2_cpic.json"),
+    "pharmvar_allele": load_json(MOCK_DIR / "cyp2c19_2_pharmvar.json"),
+    "clinpgx_gene": load_json(MOCK_DIR / "clinpgx_annotation" / "clinpgx_summary.json"),
+    "clinpgx_guideline": load_json(MOCK_DIR / "clinpgx_annotation" / "clinpgx_guideline_example.json"),
+    "vv_correct_38": load_json(MOCK_DIR / "vv_variable" / "vv_variant_grch38.json"),
+    "vv_correct_37": load_json(MOCK_DIR / "vv_variable" / "vv_variant_grch37.json"),
+    "vv_incorrect": load_json(MOCK_DIR / "vv_variable" / "vv_variant_grch37_wrong.json"),
+    "vv_NG": load_json(MOCK_DIR / "vv_variable" / "vv_NG.json"),
+    "vv_NG_outdated": load_json(MOCK_DIR / "vv_variable" / "vv_NG_outdated.json"),
+    "vv_LRG": load_json(MOCK_DIR / "vv_variable" / "vv_LRG.json"),
+    "vv_LRG_outdated": load_json(MOCK_DIR / "vv_variable" / "vv_LRG_outdated.json"),
 }
 
 # Fake responses
