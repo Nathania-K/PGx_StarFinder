@@ -26,3 +26,8 @@ nav:
   - Testing: testing.md
   - Logging: logging.md
   - Credentials: credentials.md
+
+plugins:
+  - search
+  - include-markdown:
+      encoding: utf-8

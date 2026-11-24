@@ -1,5 +1,1 @@
-# PGxStarFinder
-
-PGxStarFinder is a web application for searching pharmacogenomic 
-(PGx) information by star allele.
-
+{% include-markdown "../README.md" start="<!--overview-start-->" end="<!--overview-end-->" %}
