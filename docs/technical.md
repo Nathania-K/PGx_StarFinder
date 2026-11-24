@@ -1,4 +1,1 @@
-# Technical guide
-
-How the code is organised will be written here as each part is added.
-
+{% include-markdown "../README.md" start="<!--technical-start-->" end="<!--technical-end-->" %}

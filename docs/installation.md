@@ -1,4 +1,1 @@
-# Installation
-
-How to set up the environment and run PGxStarFinder will be written here as the app is built.
-
+{% include-markdown "../README.md" start="<!--install-start-->" end="<!--install-end-->" %}

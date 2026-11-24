@@ -1,4 +1,1 @@
-# Logging
-
-How logging is configured and where the log file is kept will be written here.
-
+{% include-markdown "../README.md" start="<!--logging-start-->" end="<!--logging-end-->" %}

@@ -1,4 +1,1 @@
-# Credentials
-
-How API keys are kept out of Git and logs will be written here.
-
+{% include-markdown "../README.md" start="<!--credentials-start-->" end="<!--credentials-end-->" %}
