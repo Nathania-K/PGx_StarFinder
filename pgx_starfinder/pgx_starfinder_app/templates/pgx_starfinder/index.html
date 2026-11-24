@@ -1,86 +1,38 @@
-<!-- ========================================================================== -->
-<!-- TEMPLATE:  A reusable HTML file allowing display of dynamic data           -->
-<!-- ========================================================================== -->
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
+{% extends "pgx_starfinder/base.html" %}
 
-<!-- ========================================================================== -->
-<!-- Set-up MetaData & Provide Page Heading                                     -->
-<!-- ========================================================================== -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}Search | PGx StarFinder{% endblock %}
 
-    <title>PGx_StarFinder</title>
+{% block content %}
+    <h1>Welcome to PGx_StarFinder</h1>
 
-<!-- ========================================================================== -->
-<!-- Format External Resources                                                  -->
-<!-- ========================================================================== -->
-    <link 
-        rel="stylesheet" 
-        href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300"
-        type="text/css" 
+    <form
+        id="search-form"
+        action="{% url 'search' %}"
+        method="post"
+    >
+        {% csrf_token %}
+
+        <label for="star_allele">
+           💫 Please enter a star allele:
+        </label>
+
+        <input
+            type="text"
+            id="star_allele"
+            name="star_allele"
+            value="{{ search_term|default:'' }}"
+            required
         >
 
-<!-- ========================================================================== -->
-<!-- Link Static Assests                                                        -->
-<!-- ========================================================================== -->
-    {% load static %}
-
-    <link 
-        rel="stylesheet" 
-        href="{% static 'pgx_starfinder/style.css' %}"
-        >
-
-</head>
-
-<body>
-
-<div class="container">
-    <!-- ========================================================================== -->
-    <!-- Page Heading                                                               -->
-    <!-- ========================================================================== -->
-    <h1> Welcome to PGx_StarFinder </h1>
-
-    <!-- ========================================================================== -->
-    <!-- Search Form                                                                -->
-    <!-- ========================================================================== -->
-    <form action="{% url 'search' %}" method="post">
-
-    <!-- Cross-Site Request Forgery (CSRF) Protection Django provides built-in 
-    protection against CSRF attacks through a token which is accepted upon genuine 
-    search requests. 
-    -->
-
-    {% csrf_token %}
-
-    <label for="gene">Please enter a star allele:</label>
-
-    <input 
-        type="text" 
-        id="gene" 
-        name="gene"
-        value="{{ search_term|default:'' }}"
-        required
-        >
-
-    <br><br>
-
-    <button type="submit">
-        🔍 Get Star Allele Information
-    </button>
-
+        <button type="submit">
+            🔍 Get Star Allele Information
+        </button>
     </form>
-    
+
     {% if error_message %}
         <p class="error-message" role="alert">
             {{ error_message }}
         </p>
     {% endif %}
-
-</div> 
-
-</body>
-
-</html>
+{% endblock %}

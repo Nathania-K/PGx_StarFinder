@@ -17,5 +17,6 @@ venv/
 db.sqlite3
 staticfiles/
 media/
+.cache
 # mkdocs documentation
 /site
