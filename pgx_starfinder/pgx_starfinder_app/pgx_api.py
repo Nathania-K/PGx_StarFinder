@@ -373,11 +373,13 @@ def clinpgx_api(star_allele):
                         "Title": guideline_data.get("name"),
                         "Source": guideline_data.get("source"),
                         "Summary": summary or None,
-                        "Citation_Link": ", ".join(
-                            c.get("_sameAs") for c in guideline_data.get("literature") or [] if c.get("_sameAs")
-                        ),
+                        "Citation_Link": [
+                            citation.get("_sameAs")
+                            for citation in guideline_data.get("literature") or []
+                            if citation.get("_sameAs")
+                        ],
                     }
-
+                    
                 #Outside the "if": runs for new and already-fetched guidelines alike.
                 if guideline_cache.get(guideline_id):
                     drug["Guideline_Details"].append(guideline_cache[guideline_id])
@@ -450,9 +452,11 @@ def data_unification(star_allele):
             "HGNC_ID": pharmvar_data.get("HGNC_ID") or pharmvar_data.get("Reason"),
             "Variants": pharmvar_data.get("Variants") or [],
             "Academic_Findings": cpic_data.get("Academic_Findings") or cpic_data.get("Reason"),
+            "Academic_Findings": cpic_data.get("Academic_Findings") or cpic_data.get("Reason"),
             "Citation_Link": cpic_data.get("Citation_Link") or [],
         },
         # Drug information from ClinPGx: one entry per drug, with its annotations and guidelines.
+        "Drug_Data": clinpgx_data.get("Drugs") or clinpgx_data.get("Reason"),
         "Drug_Data": clinpgx_data.get("Drugs") or clinpgx_data.get("Reason"),
         **reasons,
     }
