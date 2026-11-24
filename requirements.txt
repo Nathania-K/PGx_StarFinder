@@ -16,3 +16,4 @@ pytest-django==4.14.0
 responses==0.25.0
 jmespath==1.1.0
 mkdocs==1.5.3
+mkdocs-include-markdown-plugin==7.3.0
