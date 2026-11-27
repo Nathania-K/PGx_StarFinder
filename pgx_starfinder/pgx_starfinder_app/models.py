@@ -40,9 +40,9 @@ class star_allele_search(models.Model):
 
     result = models.ForeignKey(
         star_allele_result,
-        on_delete=models.SET_NULL
-        null=True
-        related_name="searches,"
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="searches",
     )
 
     # Shows whether an API call was avoided
